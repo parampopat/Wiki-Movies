@@ -8,5 +8,5 @@ setup(
     license='',
     author='Param Popat',
     author_email='param.popat@gmail.com',
-    description='Required Packages',
+    description='Required Packages'
 )
