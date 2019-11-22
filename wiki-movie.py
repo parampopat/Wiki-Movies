@@ -7,6 +7,7 @@ __git__ = "https://github.com/parampopat/"
 import os
 import pandas as pd
 import wikipedia
+from wikipedia.exceptions import DisambiguationError
 
 
 def legalize(name, illegal):
@@ -25,7 +26,8 @@ def legalize(name, illegal):
 if __name__ == '__main__':
     # Define the task. For Example "Plot"
     task = "Plot"
-
+    author = "_James_Cameron"
+    csvname = "jamescameron.csv"
     # Wikipedia header format
     header = "== " + task + " =="
 
@@ -33,19 +35,22 @@ if __name__ == '__main__':
     illegalCharacters = [':', '%', '/', '\\', '.', '>', '<', '?', '|', '*', '"', ]
 
     # Path to save task files.
-    path = "F:\\PARAM\\Wiki-Movies\\" + task + "\\"
+    path = "F:\\PARAM\\Wiki-Movies\\" + task + author + "\\"
 
     # Check if folder exists otherwise create it.
     if not os.path.exists(path):
         os.mkdir(path)
 
     # Open the CSV containing names of movies
-    listOfMovies = pd.read_csv(path.replace(task + "\\", "") + "mcu.csv").iloc[:, 0].values
+    listOfMovies = pd.read_csv(path.replace(task + author + "\\", "") + csvname).iloc[:, 0].values
     listOfFiles = []
 
     # For each movie, extract plot and save it in text file.
     for movieName in listOfMovies:
-        text = wikipedia.page(movieName).content.replace("\n", "")
+        try:
+            text = wikipedia.page(movieName).content.replace("\n", "")
+        except DisambiguationError:
+            text = wikipedia.page(movieName + " (film)").content.replace("\n", "")
         # If page doesnt have the task header, try adding (film) to the movie name.
         if header not in text:
             try:
@@ -62,7 +67,7 @@ if __name__ == '__main__':
         # Check and solve for illegal characters in movie name.
         fileName = legalize(movieName, illegalCharacters)
 
-        # Keep a track of filenames
+        # Keep a track of filenames`
         listOfFiles.append([movieName, fileName])
 
         # Save the task content in text files.
@@ -72,4 +77,4 @@ if __name__ == '__main__':
 
     # Save the movie name to file name association for future reference.
     assoc = pd.DataFrame(listOfFiles, columns=['Movie Name', 'File Name'])
-    assoc.to_csv(path.replace(task + "\\", "") + task + '_associations.csv', index=None)
+    assoc.to_csv(path.replace(task + author + "\\", "") + task + author + '_associations.csv', index=None)
