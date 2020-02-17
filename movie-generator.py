@@ -7,12 +7,12 @@ __git__ = "https://github.com/parampopat/"
 # Larger LSTM Network to Generate Text for Alice in Wonderland
 import numpy
 import sys
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
-from keras.layers import LSTM
-from keras.callbacks import ModelCheckpoint
-from keras.utils import np_utils
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import LSTM
+from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.utils import np_utils
 import pandas as pd
 
 # load ascii text and covert to lowercase

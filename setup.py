@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='Wiki-Movies',
-    version='1',
+    version='1.1',
     packages=find_packages(),
     url='',
     license='',

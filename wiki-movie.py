@@ -7,7 +7,7 @@ __git__ = "https://github.com/parampopat/"
 import os
 import pandas as pd
 import wikipedia
-from wikipedia.exceptions import DisambiguationError
+from wikipedia.exceptions import DisambiguationError, PageError
 
 
 def legalize(name, illegal):
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         if header not in text:
             try:
                 text = wikipedia.page(movieName + " (film)").content.replace("\n", "")
-            except wikipedia.exceptions.PageError:
+            except PageError:
                 # If page doesn't exist
                 print(movieName, 'NA')
                 continue
